@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.claudedirectory.org)",
+      "WebFetch(domain:www.pubnub.com)",
+      "WebFetch(domain:www.promptfoo.dev)",
+      "WebFetch(domain:claudelog.com)",
+      "Bash(bash test-agents.sh)"
+    ]
+  }
+}
