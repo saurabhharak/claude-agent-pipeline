@@ -71,7 +71,7 @@ Not every task needs the full pipeline. The manager adapts:
 **Option A — Setup script:**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-agent-pipeline.git
+git clone https://github.com/saurabhharak/claude-agent-pipeline.git
 cd claude-agent-pipeline
 bash setup.sh /path/to/your-project
 ```
