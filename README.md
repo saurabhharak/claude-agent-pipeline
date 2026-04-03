@@ -6,56 +6,41 @@ Copy this into any project. Fill in one config file. Start building.
 
 ## Pipeline
 
-```
-                          ┌──────────────────┐
-                          │     manager      │
-                          │   (orchestrator) │
-                          └────────┬─────────┘
-                                   │
-              ┌────────────────────┼────────────────────┐
-              ▼                    │                     │
-     ┌─────────────┐              │                     │
-     │ brainstormer │              │                     │
-     │  feature spec│              │                     │
-     └──────┬──────┘              │                     │
-            ▼                     │                     │
-     ┌─────────────┐              │                     │
-     │  architect   │              │                     │
-     │  tech design │              │                     │
-     └──────┬──────┘              │                     │
-            │                     │                     │
-     ┌──────┴──────┐              │                     │
-     ▼             ▼              │                     │
-┌──────────┐ ┌───────────┐       │                     │
-│arch-     │ │security-  │       │                     │
-│reviewer  │ │reviewer   │  parallel                   │
-└────┬─────┘ └─────┬─────┘       │                     │
-     └──────┬──────┘              │                     │
-            ▼                     │                     │
-     ⏸️ USER APPROVAL              │                     │
-            │                     │                     │
-     ┌──────┴──────┐              │                     │
-     ▼             ▼              │                     │
-┌──────────┐ ┌───────────┐       │                     │
-│ux-       │ │ux-        │       │                     │
-│designer  │ │reviewer   │  parallel                   │
-└────┬─────┘ └─────┬─────┘       │                     │
-     └──────┬──────┘              │                     │
-            ▼                     │                     │
-     ⏸️ USER APPROVAL              │                     │
-            │                     │                     │
-            ▼                     │                     │
-     ┌─────────────┐              │                     │
-     │ implementer  │              │                     │
-     │  write code  │              │                     │
-     └──────┬──────┘              │                     │
-            ▼                     │                     │
-     ┌─────────────┐              │                     │
-     │code-reviewer │              │                     │
-     │  final check │              │                     │
-     └──────┬──────┘              │                     │
-            ▼                     │                     │
-     ⏸️ USER APPROVAL              │                     │
+```mermaid
+flowchart TD
+    M["<b>manager</b><br/><i>orchestrator</i>"]:::manager
+
+    M --> B["<b>brainstormer</b><br/>feature spec"]:::opus
+    B --> A["<b>architect</b><br/>tech design"]:::opus
+
+    A --> PAR1
+
+    subgraph PAR1 [" "]
+        direction LR
+        AR["<b>arch-reviewer</b><br/>pattern check"]:::opus
+        SR["<b>security-reviewer</b><br/>OWASP / auth"]:::opus
+    end
+
+    PAR1 --> G1{{"USER APPROVAL"}}:::gate
+
+    G1 --> PAR2
+
+    subgraph PAR2 [" "]
+        direction LR
+        UD["<b>ux-designer</b><br/>screen mockups"]:::sonnet
+        UR["<b>ux-reviewer</b><br/>a11y / best practices"]:::sonnet
+    end
+
+    PAR2 --> G2{{"USER APPROVAL"}}:::gate
+
+    G2 --> I["<b>implementer</b><br/>write code"]:::sonnet
+    I --> CR["<b>code-reviewer</b><br/>final check"]:::opus
+    CR --> G3{{"USER APPROVAL"}}:::gate
+
+    classDef manager fill:#7c3aed,stroke:#a78bfa,color:#fff
+    classDef opus fill:#2563eb,stroke:#60a5fa,color:#fff
+    classDef sonnet fill:#059669,stroke:#34d399,color:#fff
+    classDef gate fill:#d97706,stroke:#fbbf24,color:#fff
 ```
 
 Not every task needs the full pipeline. The manager adapts:
